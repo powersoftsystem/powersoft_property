@@ -1,141 +1,115 @@
 """
-Second pass over the number cards, run on the demo site before exporting.
+Collapse the duplicate number cards on the demo site, before exporting.
 
-`deneutralise_demo_labels` renamed what it could, but four cards refused:
-"Total Units", "Occupied Units", "Vacant Units" and "Active Leases" were
-already taken by older duplicates — the first set built during the demo, whose
-filters name six specific properties:
+The demo ended up with two parallel sets of the same four cards:
 
-    ["Property Unit", "property", "in",
-        ["Cantonments Court Apartments", "East Legon Hills Villas", ...]]
+    Total Units          used by Property Setup       filtered on a hardcoded
+    Occupied Units       used by Property Setup,      list of six demo property
+    Vacant Units         Property Leasing,            names — matches nothing on
+    Active Leases        Property Sales               a customer site
 
-That filter matches nothing on a customer site, so those cards would ship and
-read zero forever. There are four more leftovers in the same state carrying a
-company or currency in the filter: the UK/GHS rent roll and rent outstanding
-pair.
+    Total Units — Ghana      used by the main workspace and the Property
+    Occupied Units — Ghana   Management dashboard; filters are already clean,
+    Vacant Units — Ghana     but the names carry a country
+    Active Leases — Ghana
 
-So: delete the leftovers, then rename the good cards into the names they free
-up. Deletion only happens when nothing points at the card — the check covers
-workspace layout JSON, workspace child rows and dashboards.
+Neither set is disposable on its own: delete the first and three sub-workspaces
+lose their cards; delete the second and the main workspace and dashboard lose
+theirs. So collapse them — give the cleanly-named cards correct filters, point
+every workspace and dashboard at those, then drop the duplicates.
+
+Two more cards carry a company in their filter and a currency in their name:
+"Monthly Rent Roll (GHS)" and "Rent Outstanding (GHS)". Those are cleaned and
+renamed in place.
 
     bench --site demo-v16.powersoftsystem.com execute \\
         powersoft_property.tidy_number_cards.run
 
-Safe to run twice.
+Safe to run twice. Nothing is deleted while anything still points at it.
 """
 
 import frappe
 
 
-# Good card -> the clean name it should take, currently held by a duplicate.
-RENAME_INTO = {
+# Duplicate -> the cleanly named card that should survive.
+COLLAPSE = {
 	"Total Units — Ghana": "Total Units",
 	"Occupied Units — Ghana": "Occupied Units",
 	"Vacant Units — Ghana": "Vacant Units",
 	"Active Leases — Ghana": "Active Leases",
 }
 
-# Demo-only cards. Each carries a company or a currency in its filter and has
-# a neutral equivalent already shipping.
-LEFTOVERS = [
-	"Monthly Rent Roll — UK (GBP)",
-	"Monthly Rent Roll (GHS)",
-	"Rent Outstanding — UK (GBP)",
-	"Rent Outstanding (GHS)",
-]
+# Carries a currency in the name and a company in the filter.
+RENAME = {
+	"Monthly Rent Roll (GHS)": "Monthly Rent Roll",
+	"Rent Outstanding (GHS)": "Rent Outstanding",
+}
+
+# The filter each surviving card should end up with. No company, no currency,
+# no property names — the card counts whatever the site holds.
+FILTERS = {
+	"Total Units": "[]",
+	"Occupied Units": '[["Property Unit","unit_status","=","Occupied"]]',
+	"Vacant Units": '[["Property Unit","unit_status","=","Vacant"]]',
+	"Active Leases": (
+		'[["PS Lease Agreement","lease_status","in",["Active","Expiring Soon"]],'
+		'["PS Lease Agreement","docstatus","=",1]]'
+	),
+	"Monthly Rent Roll": (
+		'[["PS Lease Agreement","lease_status","in",["Active","Expiring Soon"]],'
+		'["PS Lease Agreement","docstatus","=",1]]'
+	),
+	"Rent Outstanding": '[["Sales Invoice","docstatus","=",1]]',
+}
 
 WORKSPACES = [
 	"Powersoft Property", "Property Setup", "Property Leasing",
 	"Property Sales", "Property Billing", "Property Facilities",
 ]
 
+DIRTY_TOKENS = ("PS Realty", "Ghana", "GHS", "GBP", "Cantonments", "East Legon",
+                "Osu Oxford", "Airport West", "Spintex", "Tema Community")
+
 
 def run():
-	referenced = _referenced_cards()
+	_apply_filters()
 
-	removed = _remove(list(RENAME_INTO.values()) + LEFTOVERS, referenced)
-	renamed = _rename_into_freed_names()
+	moved = _repoint(COLLAPSE)
+	dropped = _drop(list(COLLAPSE.keys()))
 
-	_repoint_workspaces(renamed)
-	_repoint_dashboards(renamed)
+	renamed = _rename(RENAME)
+	_repoint(renamed)
+	_apply_filters()
+
 	_align_labels()
 
 	frappe.db.commit()
 	frappe.clear_cache()
 
-	print("Removed {0} leftover card(s), renamed {1}.".format(len(removed), len(renamed)))
+	print("\nRepointed {0} reference(s), dropped {1} duplicate(s), renamed {2}.".format(
+		moved, len(dropped), len(renamed)))
 	_report()
 
 
 # ---------------------------------------------------------------------------
 
-def _referenced_cards():
-	"""Every card name mentioned by a workspace or a dashboard."""
-	names = set()
-
-	for ws_name in frappe.get_all(
-		"Workspace", filters={"name": ["in", WORKSPACES]}, pluck="name"
-	):
-		ws = frappe.get_doc("Workspace", ws_name)
-		content = ws.content or ""
-
-		for card in frappe.get_all("Number Card", pluck="name"):
-			# The layout stores the card name inside a JSON string.
-			if '"{0}"'.format(card) in content:
-				names.add(card)
-
-		for row in ws.number_cards:
-			if row.number_card_name:
-				names.add(row.number_card_name)
-
-	for dash_name in frappe.get_all("Dashboard", pluck="name"):
-		dash = frappe.get_doc("Dashboard", dash_name)
-		for row in dash.cards:
-			if row.card:
-				names.add(row.card)
-
-	return names
-
-
-def _remove(candidates, referenced):
-	removed = []
-
-	for name in candidates:
+def _apply_filters():
+	for name, filters in FILTERS.items():
 		if not frappe.db.exists("Number Card", name):
 			continue
-		if name in referenced:
-			print("Keeping '{0}' — still referenced".format(name))
+		current = frappe.db.get_value("Number Card", name, "filters_json")
+		if current == filters:
 			continue
-
-		frappe.delete_doc(
-			"Number Card", name, force=True, ignore_permissions=True, delete_permanently=True
-		)
-		removed.append(name)
-		print("Removed leftover card: {0}".format(name))
-
-	return removed
+		frappe.db.set_value("Number Card", name, "filters_json", filters, update_modified=False)
+		print("Filter cleaned: {0}".format(name))
 
 
-def _rename_into_freed_names():
-	renamed = {}
+def _repoint(mapping):
+	"""Point every workspace and dashboard at the surviving card."""
+	if not mapping:
+		return 0
 
-	for old, new in RENAME_INTO.items():
-		if not frappe.db.exists("Number Card", old):
-			continue
-		if frappe.db.exists("Number Card", new):
-			print("Cannot rename '{0}' — '{1}' is still occupied".format(old, new))
-			continue
-
-		frappe.rename_doc("Number Card", old, new, force=True, show_alert=False)
-		renamed[old] = new
-		print("Number Card: '{0}' -> '{1}'".format(old, new))
-
-	return renamed
-
-
-def _repoint_workspaces(renamed):
-	if not renamed:
-		return
+	count = 0
 
 	for ws_name in frappe.get_all(
 		"Workspace", filters={"name": ["in", WORKSPACES]}, pluck="name"
@@ -144,7 +118,7 @@ def _repoint_workspaces(renamed):
 		touched = False
 
 		content = ws.content or ""
-		for old, new in renamed.items():
+		for old, new in mapping.items():
 			if old in content:
 				content = content.replace(old, new)
 				touched = True
@@ -152,11 +126,12 @@ def _repoint_workspaces(renamed):
 			ws.content = content
 
 		for row in ws.number_cards:
-			if row.number_card_name in renamed:
-				row.number_card_name = renamed[row.number_card_name]
+			if row.number_card_name in mapping:
+				row.number_card_name = mapping[row.number_card_name]
+				count += 1
 				touched = True
-			# The renderer matches a card by the child row's label. If the two
-			# ever disagree the card silently vanishes from the page.
+			# The renderer looks a card up by the child row's label. If label
+			# and name ever disagree the card silently vanishes from the page.
 			if row.label != row.number_card_name:
 				row.label = row.number_card_name
 				touched = True
@@ -166,18 +141,14 @@ def _repoint_workspaces(renamed):
 			ws.save()
 			print("Workspace repointed: {0}".format(ws_name))
 
-
-def _repoint_dashboards(renamed):
-	if not renamed:
-		return
-
 	for dash_name in frappe.get_all("Dashboard", pluck="name"):
 		dash = frappe.get_doc("Dashboard", dash_name)
 		touched = False
 
 		for row in dash.cards:
-			if row.card in renamed:
-				row.card = renamed[row.card]
+			if row.card in mapping:
+				row.card = mapping[row.card]
+				count += 1
 				touched = True
 
 		if touched:
@@ -185,9 +156,72 @@ def _repoint_dashboards(renamed):
 			dash.save()
 			print("Dashboard repointed: {0}".format(dash_name))
 
+	return count
+
+
+def _drop(names):
+	"""Delete, but only once nothing points at the card."""
+	referenced = _referenced()
+	dropped = []
+
+	for name in names:
+		if not frappe.db.exists("Number Card", name):
+			continue
+		if name in referenced:
+			print("Keeping '{0}' — still referenced".format(name))
+			continue
+
+		frappe.delete_doc(
+			"Number Card", name, force=True, ignore_permissions=True,
+			delete_permanently=True,
+		)
+		dropped.append(name)
+		print("Dropped duplicate: {0}".format(name))
+
+	return dropped
+
+
+def _referenced():
+	names = set()
+
+	for ws_name in frappe.get_all(
+		"Workspace", filters={"name": ["in", WORKSPACES]}, pluck="name"
+	):
+		ws = frappe.get_doc("Workspace", ws_name)
+		content = ws.content or ""
+		for row in ws.number_cards:
+			if row.number_card_name:
+				names.add(row.number_card_name)
+		for card in frappe.get_all("Number Card", pluck="name"):
+			if '"{0}"'.format(card) in content:
+				names.add(card)
+
+	for dash_name in frappe.get_all("Dashboard", pluck="name"):
+		for row in frappe.get_doc("Dashboard", dash_name).cards:
+			if row.card:
+				names.add(row.card)
+
+	return names
+
+
+def _rename(mapping):
+	done = {}
+
+	for old, new in mapping.items():
+		if not frappe.db.exists("Number Card", old):
+			continue
+		if frappe.db.exists("Number Card", new):
+			print("Cannot rename '{0}' — '{1}' is occupied".format(old, new))
+			continue
+
+		frappe.rename_doc("Number Card", old, new, force=True, show_alert=False)
+		done[old] = new
+		print("Renamed: '{0}' -> '{1}'".format(old, new))
+
+	return done
+
 
 def _align_labels():
-	"""A card's label should read the same as its name. Several drifted apart."""
 	for card in frappe.get_all(
 		"Number Card",
 		filters={"module": "Powersoft Property"},
@@ -197,11 +231,11 @@ def _align_labels():
 			frappe.db.set_value(
 				"Number Card", card.name, "label", card.name, update_modified=False
 			)
-			print("Label aligned: '{0}' (was '{1}')".format(card.name, card.label))
+			print("Label aligned: {0}".format(card.name))
 
 
 def _report():
-	print("\nRemaining cards in the module:")
+	print("\nCards in the module:")
 	offenders = []
 
 	for card in frappe.get_all(
@@ -210,13 +244,11 @@ def _report():
 		fields=["name", "filters_json"],
 		order_by="name",
 	):
-		flt = card.filters_json or ""
-		dirty = any(
-			token in flt
-			for token in ("PS Realty", "Ghana", "GHS", "GBP", "Cantonments", "East Legon")
-		) or any(token in card.name for token in ("Ghana", "UK", "GHS", "GBP"))
+		blob = (card.filters_json or "") + " " + card.name
+		dirty = [t for t in DIRTY_TOKENS if t in blob]
 
-		print("  {0}{1}".format(card.name, "   <-- still company-specific" if dirty else ""))
+		print("  {0}{1}".format(
+			card.name, "   <-- {0}".format(", ".join(dirty)) if dirty else ""))
 		if dirty:
 			offenders.append(card.name)
 
