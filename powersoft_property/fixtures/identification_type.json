@@ -1,15 +1,5 @@
 [
  {
-  "country": "Ghana",
-  "description": null,
-  "docstatus": 0,
-  "doctype": "Identification Type",
-  "id_type_name": "Ghana Card",
-  "is_active": 1,
-  "modified": "2026-07-29 16:03:23.872347",
-  "name": "Ghana Card"
- },
- {
   "country": "",
   "description": null,
   "docstatus": 0,

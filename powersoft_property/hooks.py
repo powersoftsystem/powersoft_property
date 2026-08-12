@@ -19,9 +19,9 @@ after_install = "powersoft_property.install.after_install"
 # ORDER MATTERS. DocType must come first. If migrate fails on a link error, run
 # migrate a second time; the first pass creates what the second needs.
 #
-# NOTHING IN HERE MAY BE COMPANY-SPECIFIC. Every filter was checked against the
-# exported JSON to make sure it does not carry a company, currency or property
-# name into a customer's database.
+# NOTHING IN HERE MAY BE COUNTRY OR COMPANY SPECIFIC. Every filter was checked
+# by grepping the exported JSON for PS Realty, PRG, PRUK, Accra, GHS, GBP, the
+# demo property names, the office phone number and the Powersoft email address.
 # ---------------------------------------------------------------------------
 
 fixtures = [
@@ -33,14 +33,14 @@ fixtures = [
     # Property Setters.
     #
     # NOTE ON Sales Invoice. Matching that doctype wholesale swept in setters
-    # belonging to the healthcare app - depends_on rules on
-    # total_insurance_coverage_amount and patient_payable_amount reading
+    # belonging to the healthcare and lending apps - depends_on rules on
+    # patient, ref_practitioner, loan, loan_repayment and others, each reading
     #
     #   eval:["PS Realty Ghana Ltd","PS Realty UK Ltd","PS Realty Group"]
     #        .indexOf(doc.company) === -1
     #
-    # Three demo company names, applied to a customer's Sales Invoice, from an
-    # app with nothing to do with property. So invoices are matched by field.
+    # Three demo company names, applied to a customer's Sales Invoice, from
+    # apps with nothing to do with property. So invoices are matched by field.
     {
         "dt": "Property Setter",
         "filters": [["doc_type", "in", [
@@ -67,9 +67,21 @@ fixtures = [
     # empty table is the right starting point.
     {"dt": "Property Type"},
     {"dt": "Unit Type"},
+
+    # Land Tenure Type and Title Document Type ship whole. Their entries are
+    # common-law terms used across many jurisdictions - Leasehold, Freehold,
+    # Crown Land, Commonhold, Customary Tenure, Deed of Assignment - so a
+    # customer anywhere finds what fits and ignores the rest.
     {"dt": "Land Tenure Type"},
     {"dt": "Title Document Type"},
-    {"dt": "Identification Type"},
+
+    # "Ghana Card" is the one genuinely country-specific master. It stays on the
+    # demo, where it is correct and in use on real tenant records, but it does
+    # not ship. "National Identity Number" covers the same idea for everyone.
+    {
+        "dt": "Identification Type",
+        "filters": [["name", "not in", ["Ghana Card"]]],
+    },
 
     {
         "dt": "Role",
