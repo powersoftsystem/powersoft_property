@@ -1,7 +1,12 @@
 from . import __version__ as app_version
 
 app_name = "powersoft_property"
-app_title = "Powersoft Property"
+# The product name. Deliberately NOT the same as the desk tile label below,
+# which stays short so it does not wrap to three lines beside Accounting
+# and Selling. Also NOT the same as the Module Def, which every DocType,
+# report and card is bound to - renaming that would rewrite the module
+# reference on all of them for a cosmetic gain.
+app_title = "Powersoft Property Management"
 app_publisher = "Powersoft Systems"
 app_description = "Property management for ERPNext"
 app_email = "info@powersoftsystem.com"
