@@ -35,7 +35,7 @@ def after_install():
 
     _safe("set item defaults", _set_item_defaults, companies)
 
-    scoped = _safe("scope dashboard cards", scope_cards_to_company)
+    scoped = _safe("schedule card scoping", _schedule_card_scope)
 
     _safe("show next steps", _print_next_steps, companies, scoped)
 
@@ -86,7 +86,23 @@ CARD_DOCTYPES = {
 UNIT_CARDS = ["Total Units", "Occupied Units", "Vacant Units"]
 
 
-def scope_cards_to_company(company=None):
+def _ps_property_ready():
+    """
+    True once the app's own tables exist.
+
+    after_install runs BEFORE the fixtures are synced, so on a fresh install
+    `tabPS Property` does not exist yet and any query against it raises
+    TableMissingError. That is what made the first install log
+    "[skipped] scope dashboard cards". The scoping is not lost - after_migrate
+    runs once the tables are there and does it properly.
+    """
+    try:
+        return bool(frappe.db.table_exists("PS Property"))
+    except Exception:
+        return False
+
+
+def scope_cards_to_company(company=None, commit=True):
     """Write the site's own company into every property number card."""
     import json
 
@@ -100,12 +116,17 @@ def scope_cards_to_company(company=None):
         if _add_company_clause(card, doctype, company, json):
             scoped += 1
 
-    properties = frappe.get_all("PS Property", filters={"company": company}, pluck="name")
+    properties = (
+        frappe.get_all("PS Property", filters={"company": company}, pluck="name")
+        if _ps_property_ready()
+        else []
+    )
     for card in UNIT_CARDS:
         if _add_property_clause(card, properties, json):
             scoped += 1
 
-    frappe.db.commit()
+    if commit:
+        frappe.db.commit()
     frappe.clear_cache()
 
     print("Scoped {0} card(s) to {1}.".format(scoped, company))
@@ -120,6 +141,10 @@ def _default_company():
     from_defaults = frappe.db.get_single_value("Global Defaults", "default_company")
     if from_defaults:
         return from_defaults
+
+    if not _ps_property_ready():
+        companies = frappe.get_all("Company", pluck="name")
+        return companies[0] if len(companies) == 1 else None
 
     with_property = frappe.get_all("PS Property", pluck="company", distinct=True)
     with_property = [c for c in with_property if c]
@@ -343,10 +368,9 @@ def _print_next_steps(companies, scoped):
             "<li><b>Income accounts</b> created under the Income group of "
             "<i>{0}</i>, and wired into Item Defaults on any rent or service "
             "charge item found.</li>"
-            "<li><b>Dashboard cards</b> {1}. Re-run "
-            "<code>bench --site &lt;site&gt; execute "
-            "powersoft_property.install.scope_cards_to_company</code> after "
-            "adding properties so the unit counts pick them up.</li>"
+            "<li><b>Dashboard cards</b> {1}. They keep themselves scoped - "
+            "on every migrate, when a company is created, and when a property "
+            "is added or removed. Nothing to run by hand.</li>"
             "</ul>"
             "<p><b>Create your own asset categories.</b> The module creates "
             "none, on purpose. Some businesses buy land and build; others buy "
@@ -359,3 +383,107 @@ def _print_next_steps(companies, scoped):
         title="Powersoft Property installed",
         indicator="green",
     )
+
+
+# ---------------------------------------------------------------------------
+# Keeping the cards scoped WITHOUT anyone running a command
+#
+# Scoping used to be a manual step: install the app, run the setup wizard,
+# then remember to run
+#
+#     bench --site <site> execute powersoft_property.install.scope_cards_to_company
+#
+# Three ways that goes wrong. after_install runs before the company exists on a
+# fresh site, so there is nothing to scope. Unit cards need re-running once
+# properties are created. And nobody remembers the third step anyway.
+#
+# So it is wired to the events that actually change the answer: a migrate, a
+# new company, a new or deleted property. The function replaces its own
+# clauses rather than stacking them, so running it often is harmless.
+# ---------------------------------------------------------------------------
+
+def after_migrate():
+    """Runs on every `bench migrate`, including the one install-app triggers."""
+    _safe("scope dashboard cards", scope_cards_to_company)
+
+
+def refresh_card_scope(doc=None, method=None):
+    """
+    Hooked to Company and PS Property changes.
+
+    Never raise. A failure here must not stop someone saving a company or a
+    property - the worst case is a card counts too much until the next migrate.
+    """
+    try:
+        scope_cards_to_company(commit=False)
+    except Exception:
+        frappe.log_error(
+            title="Powersoft Property: could not re-scope cards",
+            message=frappe.get_traceback(),
+        )
+
+
+def _schedule_card_scope():
+    """
+    Scope the cards AFTER the install transaction commits.
+
+    Order of events inside `bench install-app` is: create tables, run
+    after_install, THEN sync fixtures. The number cards are fixtures, so at
+    after_install time they do not exist yet - scoping there found nothing and
+    reported "Scoped 0 card(s)", which is how the manual bench command crept
+    into the install instructions in the first place.
+
+    Enqueuing with enqueue_after_commit=True runs it once the fixtures are in.
+    If no worker is running the job is simply lost, and after_migrate picks it
+    up on the next migrate - so this degrades to "correct a bit later", never
+    to "wrong forever".
+    """
+    company = _default_company()
+
+    frappe.enqueue(
+        "powersoft_property.install.scope_cards_to_company",
+        queue="short",
+        enqueue_after_commit=True,
+        job_name="powersoft_property_scope_cards",
+    )
+
+    return company
+
+
+def ensure_cards_scoped(login_manager=None):
+    """
+    Self-heal on login.
+
+    Everything else about scoping is timing-dependent. after_install runs before
+    the fixtures land, so there are no cards to scope. Enqueuing after commit
+    does not survive a `bench install-app` CLI transaction. after_migrate works
+    but only if someone runs migrate.
+
+    Login is the one moment guaranteed to happen before anyone can look at a
+    dashboard, needs no background worker, and costs one cached flag plus one
+    COUNT. The flag lives in the cache, so it clears on migrate and on
+    clear-cache - exactly when the answer might have changed.
+    """
+    try:
+        cache = frappe.cache()
+        if cache.get_value("powersoft_property_cards_scoped"):
+            return
+
+        pending = frappe.db.sql(
+            """
+            select count(*)
+            from `tabNumber Card`
+            where module = 'Powersoft Property'
+              and ifnull(filters_json, '') not like '%company%'
+            """
+        )[0][0]
+
+        if pending:
+            scope_cards_to_company()
+
+        cache.set_value("powersoft_property_cards_scoped", 1)
+    except Exception:
+        frappe.log_error(
+            title="Powersoft Property: card self-heal failed",
+            message=frappe.get_traceback(),
+        )

@@ -9,6 +9,24 @@ app_license = "GPL-3.0"
 required_apps = ["erpnext"]
 
 after_install = "powersoft_property.install.after_install"
+after_migrate = "powersoft_property.install.after_migrate"
+
+# Last line of defence. See ensure_cards_scoped for why login is the only
+# moment that is guaranteed to run without a worker and without a command.
+on_session_creation = "powersoft_property.install.ensure_cards_scoped"
+
+# The dashboard cards carry a company filter that cannot be expressed as a
+# fixture. These events are the moments that answer changes, so the app keeps
+# itself correct instead of asking the installer to remember a command.
+doc_events = {
+    "Company": {
+        "after_insert": "powersoft_property.install.refresh_card_scope",
+    },
+    "PS Property": {
+        "after_insert": "powersoft_property.install.refresh_card_scope",
+        "on_trash": "powersoft_property.install.refresh_card_scope",
+    },
+}
 
 # ---------------------------------------------------------------------------
 # DESK HOME SCREEN

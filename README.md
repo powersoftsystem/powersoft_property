@@ -2,32 +2,40 @@
 
 Property management for ERPNext
 
-### Installation
+### Install
 
-You can install this app using the [bench](https://github.com/frappe/bench) CLI:
-
-```bash
-cd $PATH_TO_YOUR_BENCH
-bench get-app $URL_OF_THIS_REPO --branch main
-bench install-app powersoft_property
-```
-
-### Contributing
-
-This app uses `pre-commit` for code formatting and linting. Please [install pre-commit](https://pre-commit.com/#installation) and enable it for this repository:
+Two commands. Same as any other ERPNext app.
 
 ```bash
-cd apps/powersoft_property
-pre-commit install
+cd ~/frappe-bench
+bench get-app https://github.com/powersoftsystem/powersoft_property.git
+bench --site your.site install-app powersoft_property
 ```
 
-Pre-commit is configured to use the following tools for checking and formatting your code:
+That is the whole install. There is no third step.
 
-- ruff
-- eslint
-- prettier
-- pyupgrade
+Everything the app needs it does itself:
 
-### License
+- **Fixtures** import during `install-app`. No separate migrate.
+- **Income accounts** (`Rental Income`, `Service Charge Income`) are created
+  under your company's own Income group, with the root type checked, and wired
+  into any rent or service charge item found.
+- **Dashboard cards** scope themselves to your company. They cannot carry a
+  company filter as a fixture, so the app writes it in at run time - on the
+  next migrate, when a company is created, when a property is added or
+  removed, and on login as a backstop. If you install the app before creating
+  your company, the cards pick it up the moment you do.
 
-gpl-3.0
+One thing is left to you on purpose: **create your own asset categories.** The
+app creates none. Some businesses buy land and build; others buy a finished
+building and let it straight away. Create whatever fits how you work and map
+their accounts.
+
+### If something looks wrong
+
+| Symptom | Cause |
+|---|---|
+| Cards read across all companies | Log out and back in, or run `bench --site your.site migrate`. Both re-scope. |
+| Assets appear unstyled / logo missing | `bench build` did not run. On a bench where the bench user's Node comes from nvm, use `sudo -iu <bench-user> bench build` - a login shell. `sudo -u` picks up the system Node, and Frappe v16 needs Node 24+. |
+| Rent posts to the wrong account | Check the income account on your rent item, and that its root type is Income. |
+
