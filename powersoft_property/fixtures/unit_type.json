@@ -1,0 +1,232 @@
+[
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:56.476192",
+  "name": "Chamber & Hall",
+  "unit_type_name": "Chamber & Hall"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:19.623936",
+  "name": "2 Bedroom",
+  "unit_type_name": "2 Bedroom"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:32.698501",
+  "name": "5+ Bedroom",
+  "unit_type_name": "5+ Bedroom"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:34.894468",
+  "name": "Studio",
+  "unit_type_name": "Studio"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:37.087783",
+  "name": "Penthouse",
+  "unit_type_name": "Penthouse"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:45.330416",
+  "name": "Warehouse Bay",
+  "unit_type_name": "Warehouse Bay"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:01.216502",
+  "name": "Parking Space",
+  "unit_type_name": "Parking Space"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:04.759927",
+  "name": "Land Plot",
+  "unit_type_name": "Land Plot"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:08.270605",
+  "name": "Flat",
+  "unit_type_name": "Flat"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:10.484181",
+  "name": "Maisonette",
+  "unit_type_name": "Maisonette"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:12.481258",
+  "name": "Bedsit",
+  "unit_type_name": "Bedsit"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:15.277232",
+  "name": "Studio Apartment",
+  "unit_type_name": "Studio Apartment"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:17.088956",
+  "name": "Duplex",
+  "unit_type_name": "Duplex"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:19.206398",
+  "name": "Serviced Office",
+  "unit_type_name": "Serviced Office"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:22.305828",
+  "name": "Co-working Desk",
+  "unit_type_name": "Co-working Desk"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:24.421936",
+  "name": "Industrial Unit",
+  "unit_type_name": "Industrial Unit"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:26.815159",
+  "name": "Storage Unit",
+  "unit_type_name": "Storage Unit"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:10.629181",
+  "name": "Single Room",
+  "unit_type_name": "Single Room"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:16.982376",
+  "name": "1 Bedroom",
+  "unit_type_name": "1 Bedroom"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:30.639332",
+  "name": "4 Bedroom",
+  "unit_type_name": "4 Bedroom"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:41.932469",
+  "name": "Shop / Retail",
+  "unit_type_name": "Shop / Retail"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:28.231572",
+  "name": "3 Bedroom",
+  "unit_type_name": "3 Bedroom"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Unit Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:39.889730",
+  "name": "Office Space",
+  "unit_type_name": "Office Space"
+ }
+]

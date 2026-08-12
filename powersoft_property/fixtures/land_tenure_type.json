@@ -1,0 +1,82 @@
+[
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Land Tenure Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:05:53.709989",
+  "name": "Freehold",
+  "tenure_name": "Freehold"
+ },
+ {
+  "country": "Ghana",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Land Tenure Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:03:11.451342",
+  "name": "Stool Land",
+  "tenure_name": "Stool Land"
+ },
+ {
+  "country": "Ghana",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Land Tenure Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:03:13.696539",
+  "name": "Family Land",
+  "tenure_name": "Family Land"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Land Tenure Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:02.558789",
+  "name": "Government Land",
+  "tenure_name": "Government Land"
+ },
+ {
+  "country": "United Kingdom",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Land Tenure Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:03:19.450870",
+  "name": "Commonhold",
+  "tenure_name": "Commonhold"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Land Tenure Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:04.579450",
+  "name": "Customary Tenure",
+  "tenure_name": "Customary Tenure"
+ },
+ {
+  "country": "United Kingdom",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Land Tenure Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:03:23.966661",
+  "name": "Crown Land",
+  "tenure_name": "Crown Land"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Land Tenure Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:06:00.147045",
+  "name": "Leasehold",
+  "tenure_name": "Leasehold"
+ }
+]

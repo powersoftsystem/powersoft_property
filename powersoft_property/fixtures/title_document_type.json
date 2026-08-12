@@ -1,0 +1,152 @@
+[
+ {
+  "country": "Ghana",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:46:15.854783",
+  "name": "Indenture",
+  "title_type_name": "Indenture"
+ },
+ {
+  "country": "Ghana",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:46:18.164580",
+  "name": "Lease Agreement",
+  "title_type_name": "Lease Agreement"
+ },
+ {
+  "country": "Ghana",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:46:21.518461",
+  "name": "Allocation Note",
+  "title_type_name": "Allocation Note"
+ },
+ {
+  "country": "Ghana",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:46:23.823181",
+  "name": "Deed of Gift",
+  "title_type_name": "Deed of Gift"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:46:31.004459",
+  "name": "Title Deed",
+  "title_type_name": "Title Deed"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:46:33.489707",
+  "name": "Deed of Assignment",
+  "title_type_name": "Deed of Assignment"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:46:35.902834",
+  "name": "Sublease",
+  "title_type_name": "Sublease"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:46:40.952729",
+  "name": "Land Certificate",
+  "title_type_name": "Land Certificate"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:46:43.350063",
+  "name": "Conveyance",
+  "title_type_name": "Conveyance"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:47:02.495941",
+  "name": "Transfer Deed",
+  "title_type_name": "Transfer Deed"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:46:38.662023",
+  "name": "Certificate of Occupancy",
+  "title_type_name": "Certificate of Occupancy"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:46:45.938335",
+  "name": "Registered Title",
+  "title_type_name": "Registered Title"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:47:12.405310",
+  "name": "Freehold Title",
+  "title_type_name": "Freehold Title"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:47:15.564319",
+  "name": "Leasehold Title",
+  "title_type_name": "Leasehold Title"
+ },
+ {
+  "country": "Ghana",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Title Document Type",
+  "is_active": 1,
+  "modified": "2026-07-29 22:46:13.246656",
+  "name": "Land Title Certificate",
+  "title_type_name": "Land Title Certificate"
+ }
+]

@@ -1,0 +1,202 @@
+[
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:33.735876",
+  "name": "Apartment Block",
+  "property_type_name": "Apartment Block"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:40.324733",
+  "name": "Single Family House",
+  "property_type_name": "Single Family House"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:43.207521",
+  "name": "Townhouse",
+  "property_type_name": "Townhouse"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:45.693736",
+  "name": "Detached House",
+  "property_type_name": "Detached House"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:49.402296",
+  "name": "Semi-Detached",
+  "property_type_name": "Semi-Detached"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:52.804927",
+  "name": "Compound House",
+  "property_type_name": "Compound House"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:54.939570",
+  "name": "Gated Estate",
+  "property_type_name": "Gated Estate"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:56.917814",
+  "name": "Office Building",
+  "property_type_name": "Office Building"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:08:01.491545",
+  "name": "Warehouse",
+  "property_type_name": "Warehouse"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:08:06.137442",
+  "name": "Hostel / Student Housing",
+  "property_type_name": "Hostel / Student Housing"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:08:09.472916",
+  "name": "Serviced Apartments",
+  "property_type_name": "Serviced Apartments"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:08:14.864078",
+  "name": "Terraced House",
+  "property_type_name": "Terraced House"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:08:17.390720",
+  "name": "Semi-Detached House",
+  "property_type_name": "Semi-Detached House"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:08:19.328092",
+  "name": "Bungalow",
+  "property_type_name": "Bungalow"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:08:24.276709",
+  "name": "Business Park",
+  "property_type_name": "Business Park"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:08:26.320811",
+  "name": "Logistics Park",
+  "property_type_name": "Logistics Park"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:08:28.401365",
+  "name": "Data Centre",
+  "property_type_name": "Data Centre"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:07:58.944801",
+  "name": "Retail / Shopping Centre",
+  "property_type_name": "Retail / Shopping Centre"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:08:04.109926",
+  "name": "Mixed Use",
+  "property_type_name": "Mixed Use"
+ },
+ {
+  "country": "",
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Property Type",
+  "is_active": 1,
+  "modified": "2026-07-29 16:08:11.887495",
+  "name": "Land / Plot",
+  "property_type_name": "Land / Plot"
+ }
+]

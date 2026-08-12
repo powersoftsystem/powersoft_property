@@ -1,0 +1,76 @@
+[
+ {
+  "cards": [
+   {
+    "card": "Total Units"
+   },
+   {
+    "card": "Occupied Units"
+   },
+   {
+    "card": "Vacant Units"
+   },
+   {
+    "card": "Active Leases"
+   },
+   {
+    "card": "Rent Roll"
+   },
+   {
+    "card": "Arrears"
+   },
+   {
+    "card": "Deposits Held"
+   },
+   {
+    "card": "Open Maintenance Requests"
+   },
+   {
+    "card": "Active Listings"
+   }
+  ],
+  "chart_options": null,
+  "charts": [
+   {
+    "chart": "Rent Invoiced Monthly",
+    "width": "Half"
+   },
+   {
+    "chart": "Rent Collected Monthly",
+    "width": "Half"
+   },
+   {
+    "chart": "Units by Status",
+    "width": "Half"
+   },
+   {
+    "chart": "Leases by Status",
+    "width": "Half"
+   },
+   {
+    "chart": "Units by Property",
+    "width": "Full"
+   },
+   {
+    "chart": "Maintenance by Status",
+    "width": "Half"
+   },
+   {
+    "chart": "Maintenance by Priority",
+    "width": "Half"
+   },
+   {
+    "chart": "Enquiries by Source",
+    "width": "Full"
+   }
+  ],
+  "dashboard_name": "Property Management",
+  "docstatus": 0,
+  "doctype": "Dashboard",
+  "is_default": 0,
+  "is_standard": 0,
+  "modified": "2026-08-12 02:30:09.793333",
+  "module": "Powersoft Property",
+  "name": "Property Management"
+ }
+]

@@ -1,0 +1,1113 @@
+[
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"columns\":[[\"property\",\"PS Maintenance Request\"],[\"property_unit\",\"PS Maintenance Request\"],[\"subject\",\"PS Maintenance Request\"],[\"request_type\",\"PS Maintenance Request\"],[\"priority\",\"PS Maintenance Request\"],[\"status\",\"PS Maintenance Request\"],[\"requested_date\",\"PS Maintenance Request\"],[\"estimated_cost\",\"PS Maintenance Request\"],[\"actual_cost\",\"PS Maintenance Request\"],[\"charge_to\",\"PS Maintenance Request\"]],\"sort_by\":\"requested_date\",\"sort_order\":\"desc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:50:06.318638",
+  "module": "Powersoft Property",
+  "name": "Maintenance Cost by Property",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "PS Maintenance Request",
+  "reference_report": null,
+  "report_name": "Maintenance Cost by Property",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Facilities Manager"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"order_by\":\"`tabProperty Insurance Policy`.`end_date` asc\",\"columns\":[[\"policy_number\",\"Property Insurance Policy\"],[\"property\",\"Property Insurance Policy\"],[\"cover_type\",\"Property Insurance Policy\"],[\"status\",\"Property Insurance Policy\"],[\"insurer\",\"Property Insurance Policy\"],[\"sum_insured\",\"Property Insurance Policy\"],[\"premium_amount\",\"Property Insurance Policy\"],[\"start_date\",\"Property Insurance Policy\"],[\"end_date\",\"Property Insurance Policy\"],[\"premium_paid\",\"Property Insurance Policy\"],[\"company\",\"Property Insurance Policy\"]],\"page_length\":100}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 16:30:42.200955",
+  "module": "Powersoft Property",
+  "name": "Insurance Cover & Renewals",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Property Insurance Policy",
+  "reference_report": null,
+  "report_name": "Insurance Cover & Renewals",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   },
+   {
+    "role": "Facilities Manager"
+   },
+   {
+    "role": "Property User"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "",
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "mandatory": 1,
+    "options": "Company",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Official Logo",
+  "modified": "2026-08-11 23:57:49.310959",
+  "module": "Powersoft Property",
+  "name": "Rent Roll — Annualised",
+  "prepared_report": 0,
+  "query": "SELECT\n\tla.property AS \"Property:Link/PS Property:180\",\n\tla.property_unit AS \"Unit:Link/Property Unit:210\",\n\tla.tenant AS \"Tenant:Link/Tenant:180\",\n\tla.name AS \"Lease:Link/PS Lease Agreement:150\",\n\tla.lease_status AS \"Lease Status:Data:110\",\n\tla.start_date AS \"Start:Date:95\",\n\tla.end_date AS \"End:Date:95\",\n\tla.currency AS \"Curr:Data:60\",\n\tla.payment_frequency AS \"Frequency:Data:110\",\n\tla.rent_amount AS \"Rent per Period:Currency:140\",\n\t(la.rent_amount * CASE la.payment_frequency WHEN 'Monthly' THEN 12 WHEN 'Quarterly' THEN 4 WHEN 'Semi-Annually' THEN 2 WHEN 'Annually' THEN 1 WHEN 'Weekly' THEN 52 WHEN 'Fortnightly' THEN 26 ELSE 12 END) AS \"Rent (Annualised):Currency:150\",\n\tIFNULL(la.total_periodic_charges, 0) AS \"Charges per Period:Currency:150\",\n\t(IFNULL(la.total_periodic_charges, 0) * CASE la.payment_frequency WHEN 'Monthly' THEN 12 WHEN 'Quarterly' THEN 4 WHEN 'Semi-Annually' THEN 2 WHEN 'Annually' THEN 1 WHEN 'Weekly' THEN 52 WHEN 'Fortnightly' THEN 26 ELSE 12 END) AS \"Charges (Annualised):Currency:160\",\n\t((la.rent_amount + IFNULL(la.total_periodic_charges, 0)) * CASE la.payment_frequency WHEN 'Monthly' THEN 12 WHEN 'Quarterly' THEN 4 WHEN 'Semi-Annually' THEN 2 WHEN 'Annually' THEN 1 WHEN 'Weekly' THEN 52 WHEN 'Fortnightly' THEN 26 ELSE 12 END) AS \"Total Annual Billing:Currency:170\",\n\tIFNULL(la.outstanding_balance, 0) AS \"Lease Outstanding:Currency:150\"\nFROM `tabPS Lease Agreement` la\nWHERE la.docstatus = 1\n\tAND la.company = %(company)s\n\tAND la.lease_status IN ('Active', 'Expiring Soon')\nORDER BY la.property ASC, la.property_unit ASC",
+  "ref_doctype": "PS Lease Agreement",
+  "reference_report": null,
+  "report_name": "Rent Roll — Annualised",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   },
+   {
+    "role": "Leasing Agent"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "",
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "mandatory": 1,
+    "options": "Company",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Official Logo",
+  "modified": "2026-08-11 23:57:42.095949",
+  "module": "Powersoft Property",
+  "name": "Tenant Arrears — Ageing",
+  "prepared_report": 0,
+  "query": "SELECT\n\tsi.customer AS \"Tenant / Customer:Link/Customer:200\",\n\tsi.property AS \"Property:Link/PS Property:180\",\n\tsi.property_unit AS \"Unit:Link/Property Unit:200\",\n\tsi.ps_lease_agreement AS \"Lease:Link/PS Lease Agreement:150\",\n\tsi.name AS \"Invoice:Link/Sales Invoice:160\",\n\tsi.posting_date AS \"Posted:Date:95\",\n\tsi.due_date AS \"Due Date:Date:95\",\n\tsi.status AS \"Status:Data:90\",\n\tsi.currency AS \"Curr:Data:60\",\n\tGREATEST(DATEDIFF(CURDATE(), si.due_date), 0) AS \"Days Overdue:Int:110\",\n\tsi.grand_total AS \"Invoice Total:Currency:130\",\n\tsi.outstanding_amount AS \"Outstanding:Currency:130\",\n\tCASE WHEN DATEDIFF(CURDATE(), si.due_date) <= 0 THEN si.outstanding_amount ELSE 0 END AS \"Current (Not Due):Currency:140\",\n\tCASE WHEN DATEDIFF(CURDATE(), si.due_date) BETWEEN 1 AND 30 THEN si.outstanding_amount ELSE 0 END AS \"1-30 Days:Currency:120\",\n\tCASE WHEN DATEDIFF(CURDATE(), si.due_date) BETWEEN 31 AND 60 THEN si.outstanding_amount ELSE 0 END AS \"31-60 Days:Currency:120\",\n\tCASE WHEN DATEDIFF(CURDATE(), si.due_date) BETWEEN 61 AND 90 THEN si.outstanding_amount ELSE 0 END AS \"61-90 Days:Currency:120\",\n\tCASE WHEN DATEDIFF(CURDATE(), si.due_date) > 90 THEN si.outstanding_amount ELSE 0 END AS \"90+ Days:Currency:120\"\nFROM `tabSales Invoice` si\nWHERE si.docstatus = 1\n\tAND si.outstanding_amount > 0\n\tAND si.company = %(company)s\nORDER BY si.due_date ASC, si.customer ASC, si.name ASC",
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "Tenant Arrears — Ageing",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "",
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "mandatory": 1,
+    "options": "Company",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Official Logo",
+  "modified": "2026-08-11 23:58:40.498445",
+  "module": "Powersoft Property",
+  "name": "Occupancy by Property",
+  "prepared_report": 0,
+  "query": "SELECT\n\tpu.property AS \"Property:Link/PS Property:230\",\n\tCOUNT(*) AS \"Total Units:Int:100\",\n\tSUM(CASE WHEN pu.unit_status = 'Occupied' THEN 1 ELSE 0 END) AS \"Occupied:Int:95\",\n\tSUM(CASE WHEN pu.unit_status = 'Vacant' THEN 1 ELSE 0 END) AS \"Vacant:Int:85\",\n\tSUM(CASE WHEN pu.unit_status = 'Reserved' THEN 1 ELSE 0 END) AS \"Reserved:Int:95\",\n\tSUM(CASE WHEN pu.unit_status = 'Under Maintenance' THEN 1 ELSE 0 END) AS \"Under Maintenance:Int:140\",\n\tSUM(CASE WHEN pu.unit_status = 'Sold' THEN 1 ELSE 0 END) AS \"Sold:Int:75\",\n\tCONCAT(FORMAT(100.0 * SUM(CASE WHEN pu.unit_status = 'Occupied' THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0), 1), ' %%') AS \"Occupancy %% (All Units):Data:160\",\n\tCONCAT(FORMAT(100.0 * SUM(CASE WHEN pu.unit_status = 'Occupied' THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN pu.unit_status IN ('Occupied', 'Vacant', 'Reserved', 'Under Maintenance') THEN 1 ELSE 0 END), 0), 1), ' %%') AS \"Occupancy %% (Lettable):Data:170\"\nFROM `tabProperty Unit` pu\nINNER JOIN `tabPS Property` p ON p.name = pu.property\nWHERE p.company = %(company)s\nGROUP BY pu.property\nORDER BY pu.property ASC",
+  "ref_doctype": "Property Unit",
+  "reference_report": null,
+  "report_name": "Occupancy by Property",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   },
+   {
+    "role": "Leasing Agent"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "",
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "mandatory": 1,
+    "options": "Company",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "180",
+    "fieldname": "days_ahead",
+    "fieldtype": "Int",
+    "label": "Expiring Within (Days)",
+    "mandatory": 0,
+    "options": null,
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Official Logo",
+  "modified": "2026-08-11 23:58:19.630612",
+  "module": "Powersoft Property",
+  "name": "Lease Expiry & Renewal Pipeline",
+  "prepared_report": 0,
+  "query": "SELECT\n\tla.property AS \"Property:Link/PS Property:180\",\n\tla.property_unit AS \"Unit:Link/Property Unit:200\",\n\tla.tenant AS \"Tenant:Link/Tenant:180\",\n\tla.name AS \"Lease:Link/PS Lease Agreement:150\",\n\tla.lease_status AS \"Lease Status:Data:110\",\n\tla.end_date AS \"Expiry Date:Date:100\",\n\tDATEDIFF(la.end_date, CURDATE()) AS \"Days Remaining:Int:120\",\n\tCASE\n\t\tWHEN DATEDIFF(la.end_date, CURDATE()) < 0 THEN 'Already Expired'\n\t\tWHEN DATEDIFF(la.end_date, CURDATE()) <= 30 THEN '0-30 Days'\n\t\tWHEN DATEDIFF(la.end_date, CURDATE()) <= 60 THEN '31-60 Days'\n\t\tWHEN DATEDIFF(la.end_date, CURDATE()) <= 90 THEN '61-90 Days'\n\t\tWHEN DATEDIFF(la.end_date, CURDATE()) <= 180 THEN '91-180 Days'\n\t\tELSE 'Beyond 180 Days'\n\tEND AS \"Expiry Bucket:Data:140\",\n\tla.payment_frequency AS \"Frequency:Data:110\",\n\tla.rent_amount AS \"Current Rent per Period:Currency:170\",\n\t(la.rent_amount * CASE la.payment_frequency WHEN 'Monthly' THEN 12 WHEN 'Quarterly' THEN 4 WHEN 'Semi-Annually' THEN 2 WHEN 'Annually' THEN 1 WHEN 'Weekly' THEN 52 WHEN 'Fortnightly' THEN 26 ELSE 12 END) AS \"Rent at Risk (Annualised):Currency:180\",\n\tla.notice_period_days AS \"Notice Days:Int:105\",\n\tla.renewal_option AS \"Renewal Option:Check:120\",\n\t(SELECT lr.name FROM `tabLease Renewal` lr WHERE lr.original_lease = la.name AND lr.docstatus < 2 ORDER BY lr.creation DESC LIMIT 1) AS \"Renewal Doc:Link/Lease Renewal:150\",\n\tIFNULL((SELECT lr2.status FROM `tabLease Renewal` lr2 WHERE lr2.original_lease = la.name AND lr2.docstatus < 2 ORDER BY lr2.creation DESC LIMIT 1), 'No Renewal Raised') AS \"Renewal Status:Data:160\",\n\t(SELECT lr3.new_rent_amount FROM `tabLease Renewal` lr3 WHERE lr3.original_lease = la.name AND lr3.docstatus < 2 ORDER BY lr3.creation DESC LIMIT 1) AS \"Proposed New Rent:Currency:160\"\nFROM `tabPS Lease Agreement` la\nWHERE la.docstatus = 1\n\tAND la.company = %(company)s\n\tAND IFNULL(la.lease_status, '') NOT IN ('Terminated', 'Cancelled')\n\tAND la.end_date <= DATE_ADD(CURDATE(), INTERVAL IFNULL(%(days_ahead)s, 180) DAY)\nORDER BY la.end_date ASC, la.property ASC",
+  "ref_doctype": "PS Lease Agreement",
+  "reference_report": null,
+  "report_name": "Lease Expiry & Renewal Pipeline",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Leasing Agent"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "",
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "mandatory": 1,
+    "options": "Company",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "2000-01-01",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 1,
+    "options": null,
+    "wildcard_filter": 0
+   },
+   {
+    "default": "2099-12-31",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 1,
+    "options": null,
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Official Logo",
+  "modified": "2026-08-12 00:24:00.518983",
+  "module": "Powersoft Property",
+  "name": "Rent Collection Summary",
+  "prepared_report": 0,
+  "query": "SELECT\n\tsi.property AS \"Property:Link/PS Property:220\",\n\tCONCAT(YEAR(si.posting_date), '-', LPAD(MONTH(si.posting_date), 2, '0')) AS \"Month:Data:95\",\n\tCOUNT(DISTINCT si.name) AS \"Invoices:Int:90\",\n\tSUM(si.grand_total) AS \"Invoiced:Currency:150\",\n\tSUM(si.grand_total - si.outstanding_amount) AS \"Collected:Currency:150\",\n\tSUM(si.outstanding_amount) AS \"Outstanding:Currency:150\",\n\tCONCAT(FORMAT(100.0 * SUM(si.grand_total - si.outstanding_amount) / NULLIF(SUM(si.grand_total), 0), 1), ' %%') AS \"Collection Rate %%:Data:150\"\nFROM `tabSales Invoice` si\nWHERE si.docstatus = 1\n\tAND si.company = %(company)s\n\tAND IFNULL(si.property, '') <> ''\n\tAND si.posting_date >= %(from_date)s\n\tAND si.posting_date <= %(to_date)s\nGROUP BY si.property, CONCAT(YEAR(si.posting_date), '-', LPAD(MONTH(si.posting_date), 2, '0'))\nORDER BY si.property ASC, CONCAT(YEAR(si.posting_date), '-', LPAD(MONTH(si.posting_date), 2, '0')) ASC",
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "Rent Collection Summary",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "",
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "mandatory": 1,
+    "options": "Company",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Official Logo",
+  "modified": "2026-08-11 23:57:55.718563",
+  "module": "Powersoft Property",
+  "name": "Deposit Liability Register",
+  "prepared_report": 0,
+  "query": "SELECT\n\tIFNULL(pu.property, '(no unit linked)') AS \"Property:Link/PS Property:190\",\n\tsd.property_unit AS \"Unit:Link/Property Unit:200\",\n\tsd.tenant AS \"Tenant:Link/Tenant:190\",\n\tsd.lease AS \"Lease:Link/PS Lease Agreement:150\",\n\tsd.name AS \"Deposit:Link/Security Deposit:140\",\n\tsd.received_date AS \"Received:Date:100\",\n\tsd.status AS \"Status:Data:100\",\n\tsd.currency AS \"Curr:Data:60\",\n\tsd.mode_of_payment AS \"Mode of Payment:Data:140\",\n\tsd.deposit_amount AS \"Deposit Received:Currency:150\",\n\tIFNULL(sd.deductions, 0) AS \"Deductions:Currency:130\",\n\tIFNULL(sd.refund_amount, 0) AS \"Refunded:Currency:130\",\n\t(IFNULL(sd.deposit_amount, 0) - IFNULL(sd.deductions, 0) - IFNULL(sd.refund_amount, 0)) AS \"Net Deposit Held:Currency:160\"\nFROM `tabSecurity Deposit` sd\nLEFT JOIN `tabProperty Unit` pu ON pu.name = sd.property_unit\nWHERE sd.docstatus = 1\n\tAND sd.company = %(company)s\nORDER BY IFNULL(pu.property, 'zzz') ASC, sd.property_unit ASC, sd.received_date ASC",
+  "ref_doctype": "Security Deposit",
+  "reference_report": null,
+  "report_name": "Deposit Liability Register",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "",
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "mandatory": 1,
+    "options": "Company",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "2000-01-01",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 1,
+    "options": null,
+    "wildcard_filter": 0
+   },
+   {
+    "default": "2099-12-31",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 1,
+    "options": null,
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Official Logo",
+  "modified": "2026-08-12 00:23:46.132078",
+  "module": "Powersoft Property",
+  "name": "Profit by Property",
+  "prepared_report": 0,
+  "query": "SELECT\n\tgl.property AS \"Property:Link/PS Property:230\",\n\tgl.fiscal_year AS \"Fiscal Year:Link/Fiscal Year:120\",\n\tSUM(CASE WHEN acc.root_type = 'Income' THEN gl.credit - gl.debit ELSE 0 END) AS \"Income:Currency:165\",\n\tSUM(CASE WHEN acc.root_type = 'Expense' THEN gl.debit - gl.credit ELSE 0 END) AS \"Expense:Currency:165\",\n\tSUM(gl.credit - gl.debit) AS \"Net Profit:Currency:165\",\n\tCONCAT(FORMAT(100.0 * SUM(gl.credit - gl.debit) / NULLIF(SUM(CASE WHEN acc.root_type = 'Income' THEN gl.credit - gl.debit ELSE 0 END), 0), 1), ' %%') AS \"Net Margin %%:Data:140\"\nFROM `tabGL Entry` gl\nINNER JOIN `tabAccount` acc ON acc.name = gl.account\nWHERE gl.is_cancelled = 0\n\tAND gl.company = %(company)s\n\tAND IFNULL(gl.property, '') <> ''\n\tAND acc.root_type IN ('Income', 'Expense')\n\tAND gl.posting_date >= %(from_date)s\n\tAND gl.posting_date <= %(to_date)s\nGROUP BY gl.property, gl.fiscal_year\nORDER BY gl.property ASC, gl.fiscal_year ASC",
+  "ref_doctype": "GL Entry",
+  "reference_report": null,
+  "report_name": "Profit by Property",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "",
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "mandatory": 1,
+    "options": "Company",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Official Logo",
+  "modified": "2026-08-11 23:58:55.780903",
+  "module": "Powersoft Property",
+  "name": "Vacancy and Void Loss",
+  "prepared_report": 0,
+  "query": "SELECT\n\tpu.property AS \"Property:Link/PS Property:200\",\n\tpu.name AS \"Unit:Link/Property Unit:215\",\n\tpu.unit_type AS \"Unit Type:Data:120\",\n\tpu.unit_status AS \"Status:Data:135\",\n\tpu.listing_status AS \"Listing Status:Data:130\",\n\tpu.currency AS \"Curr:Data:60\",\n\tpu.rent_frequency AS \"Rent Frequency:Data:125\",\n\tIFNULL(pu.rent_amount, 0) AS \"Market Rent per Period:Currency:180\",\n\t(IFNULL(pu.rent_amount, 0) * CASE pu.rent_frequency WHEN 'Monthly' THEN 12 WHEN 'Quarterly' THEN 4 WHEN 'Semi-Annually' THEN 2 WHEN 'Annually' THEN 1 WHEN 'Weekly' THEN 52 WHEN 'Fortnightly' THEN 26 ELSE 12 END) AS \"Rent Lost p.a.:Currency:150\",\n\t(IFNULL(pu.service_charge_amount, 0) * CASE pu.rent_frequency WHEN 'Monthly' THEN 12 WHEN 'Quarterly' THEN 4 WHEN 'Semi-Annually' THEN 2 WHEN 'Annually' THEN 1 WHEN 'Weekly' THEN 52 WHEN 'Fortnightly' THEN 26 ELSE 12 END) AS \"Service Charge Lost p.a.:Currency:190\",\n\t((IFNULL(pu.rent_amount, 0) + IFNULL(pu.service_charge_amount, 0)) * CASE pu.rent_frequency WHEN 'Monthly' THEN 12 WHEN 'Quarterly' THEN 4 WHEN 'Semi-Annually' THEN 2 WHEN 'Annually' THEN 1 WHEN 'Weekly' THEN 52 WHEN 'Fortnightly' THEN 26 ELSE 12 END) AS \"Total Void Loss p.a.:Currency:175\",\n\tROUND(((IFNULL(pu.rent_amount, 0) + IFNULL(pu.service_charge_amount, 0)) * CASE pu.rent_frequency WHEN 'Monthly' THEN 12 WHEN 'Quarterly' THEN 4 WHEN 'Semi-Annually' THEN 2 WHEN 'Annually' THEN 1 WHEN 'Weekly' THEN 52 WHEN 'Fortnightly' THEN 26 ELSE 12 END) / 12, 2) AS \"Void Loss per Month:Currency:165\"\nFROM `tabProperty Unit` pu\nINNER JOIN `tabPS Property` p ON p.name = pu.property\nWHERE pu.unit_status IN ('Vacant', 'Under Maintenance')\n\tAND p.company = %(company)s\nORDER BY pu.property ASC, pu.name ASC",
+  "ref_doctype": "Property Unit",
+  "reference_report": null,
+  "report_name": "Vacancy and Void Loss",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Leasing Agent"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "",
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "mandatory": 1,
+    "options": "Company",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "2000-01-01",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 1,
+    "options": null,
+    "wildcard_filter": 0
+   },
+   {
+    "default": "2099-12-31",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 1,
+    "options": null,
+    "wildcard_filter": 0
+   },
+   {
+    "default": "8",
+    "fieldname": "wht_rate",
+    "fieldtype": "Float",
+    "label": "WHT Rate (%)",
+    "mandatory": 1,
+    "options": null,
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Official Logo",
+  "modified": "2026-08-12 00:24:18.274576",
+  "module": "Powersoft Property",
+  "name": "Withholding Tax on Rent (Ghana)",
+  "prepared_report": 0,
+  "query": "SELECT\n\tsi.customer AS \"Tenant / Customer:Link/Customer:215\",\n\tsi.property AS \"Property:Link/PS Property:185\",\n\tsi.property_unit AS \"Unit:Link/Property Unit:195\",\n\tCONCAT(YEAR(si.posting_date), '-', LPAD(MONTH(si.posting_date), 2, '0')) AS \"Period:Data:95\",\n\tsi.currency AS \"Curr:Data:60\",\n\tCOUNT(DISTINCT si.name) AS \"Invoices:Int:90\",\n\tSUM(sii.base_net_amount) AS \"Rent Invoiced (Net of VAT):Currency:190\",\n\tIFNULL(%(wht_rate)s, 8) AS \"WHT Rate %%:Float:110\",\n\tROUND(SUM(sii.base_net_amount) * IFNULL(%(wht_rate)s, 8) / 100, 2) AS \"WHT Withheld:Currency:150\",\n\tROUND(SUM(sii.base_net_amount) * (100 - IFNULL(%(wht_rate)s, 8)) / 100, 2) AS \"Net After WHT:Currency:150\"\nFROM `tabSales Invoice` si\nINNER JOIN `tabSales Invoice Item` sii ON sii.parent = si.name AND sii.parenttype = 'Sales Invoice'\nINNER JOIN `tabAccount` acc ON acc.name = sii.income_account\nWHERE si.docstatus = 1\n\tAND si.company = %(company)s\n\tAND acc.root_type = 'Income'\n\tAND (\n\t\tIFNULL(si.ps_lease_agreement, '') <> ''\n\t\tOR sii.item_code IN (SELECT DISTINCT l.rent_item FROM `tabPS Lease Agreement` l WHERE IFNULL(l.rent_item, '') <> '')\n\t)\n\tAND si.posting_date >= %(from_date)s\n\tAND si.posting_date <= %(to_date)s\nGROUP BY si.customer, si.property, si.property_unit, si.currency, CONCAT(YEAR(si.posting_date), '-', LPAD(MONTH(si.posting_date), 2, '0'))\nORDER BY CONCAT(YEAR(si.posting_date), '-', LPAD(MONTH(si.posting_date), 2, '0')) ASC, si.customer ASC",
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "Withholding Tax on Rent (Ghana)",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Accountant"
+   },
+   {
+    "role": "Property Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[[\"PS Property\",\"development_stage\",\"in\",[\"Land Bank\",\"Design & Permitting\",\"Under Construction\",\"Practical Completion\",\"Fit-Out\"]]],\"columns\":[[\"property_name\",\"PS Property\"],[\"company\",\"PS Property\"],[\"development_stage\",\"PS Property\"],[\"intended_use\",\"PS Property\"],[\"project\",\"PS Property\"],[\"construction_start_date\",\"PS Property\"],[\"practical_completion_date\",\"PS Property\"],[\"total_construction_cost\",\"PS Property\"],[\"current_valuation\",\"PS Property\"],[\"status\",\"PS Property\"]],\"sort_by\":\"practical_completion_date\",\"sort_order\":\"asc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:49:52.441381",
+  "module": "Powersoft Property",
+  "name": "Construction Projects",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "PS Property",
+  "reference_report": null,
+  "report_name": "Construction Projects",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"columns\":[[\"property_owner\",\"Owner Statement\"],[\"property\",\"Owner Statement\"],[\"period_from\",\"Owner Statement\"],[\"period_to\",\"Owner Statement\"],[\"total_rent_collected\",\"Owner Statement\"],[\"total_expenses\",\"Owner Statement\"],[\"management_fee_amount\",\"Owner Statement\"],[\"withholding_tax_amount\",\"Owner Statement\"],[\"net_payable\",\"Owner Statement\"],[\"status\",\"Owner Statement\"]],\"sort_by\":\"period_to\",\"sort_order\":\"desc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:49:36.878537",
+  "module": "Powersoft Property",
+  "name": "Owner Payout Register",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Owner Statement",
+  "reference_report": null,
+  "report_name": "Owner Payout Register",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"columns\":[[\"contact_name\",\"Property Enquiry\"],[\"mobile_no\",\"Property Enquiry\"],[\"enquiry_source\",\"Property Enquiry\"],[\"interest_type\",\"Property Enquiry\"],[\"status\",\"Property Enquiry\"],[\"enquiry_date\",\"Property Enquiry\"],[\"budget_min\",\"Property Enquiry\"],[\"budget_max\",\"Property Enquiry\"],[\"assigned_to\",\"Property Enquiry\"],[\"last_contacted\",\"Property Enquiry\"]],\"sort_by\":\"enquiry_date\",\"sort_order\":\"desc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:49:39.247348",
+  "module": "Powersoft Property",
+  "name": "Sales Pipeline — Enquiries",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Property Enquiry",
+  "reference_report": null,
+  "report_name": "Sales Pipeline — Enquiries",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Leasing Agent"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"columns\":[[\"tenant\",\"Security Deposit\"],[\"property_unit\",\"Security Deposit\"],[\"deposit_amount\",\"Security Deposit\"],[\"received_date\",\"Security Deposit\"],[\"status\",\"Security Deposit\"],[\"deductions\",\"Security Deposit\"],[\"refund_amount\",\"Security Deposit\"]],\"sort_by\":\"received_date\",\"sort_order\":\"desc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:49:41.190160",
+  "module": "Powersoft Property",
+  "name": "Security Deposit Register",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Security Deposit",
+  "reference_report": null,
+  "report_name": "Security Deposit Register",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"columns\":[[\"meter\",\"Meter Reading\"],[\"property_unit\",\"Meter Reading\"],[\"tenant\",\"Meter Reading\"],[\"reading_date\",\"Meter Reading\"],[\"previous_reading\",\"Meter Reading\"],[\"current_reading\",\"Meter Reading\"],[\"consumption\",\"Meter Reading\"],[\"total_amount\",\"Meter Reading\"],[\"billing_status\",\"Meter Reading\"]],\"sort_by\":\"reading_date\",\"sort_order\":\"desc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:49:43.204984",
+  "module": "Powersoft Property",
+  "name": "Meter Reading & Utility Billing",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Meter Reading",
+  "reference_report": null,
+  "report_name": "Meter Reading & Utility Billing",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   },
+   {
+    "role": "Facilities Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"columns\":[[\"buyer_name\",\"Property Sale Contract\"],[\"property\",\"Property Sale Contract\"],[\"property_unit\",\"Property Sale Contract\"],[\"sale_type\",\"Property Sale Contract\"],[\"sale_price\",\"Property Sale Contract\"],[\"total_paid\",\"Property Sale Contract\"],[\"outstanding_balance\",\"Property Sale Contract\"],[\"sale_status\",\"Property Sale Contract\"],[\"agreement_date\",\"Property Sale Contract\"]],\"sort_by\":\"agreement_date\",\"sort_order\":\"desc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:49:50.538126",
+  "module": "Powersoft Property",
+  "name": "Property Sales & Instalments",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Property Sale Contract",
+  "reference_report": null,
+  "report_name": "Property Sales & Instalments",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Leasing Agent"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"columns\":[[\"project_name\",\"Project\"],[\"company\",\"Project\"],[\"status\",\"Project\"],[\"expected_start_date\",\"Project\"],[\"expected_end_date\",\"Project\"],[\"percent_complete\",\"Project\"],[\"estimated_costing\",\"Project\"],[\"total_purchase_cost\",\"Project\"],[\"total_costing_amount\",\"Project\"]],\"sort_by\":\"expected_end_date\",\"sort_order\":\"asc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:50:00.165041",
+  "module": "Powersoft Property",
+  "name": "Project Cost vs Budget",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Project",
+  "reference_report": null,
+  "report_name": "Project Cost vs Budget",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[[\"Maintenance Job Card\",\"docstatus\",\"=\",1]],\"columns\":[[\"job_title\",\"Maintenance Job Card\"],[\"property\",\"Maintenance Job Card\"],[\"property_unit\",\"Maintenance Job Card\"],[\"job_type\",\"Maintenance Job Card\"],[\"performed_by\",\"Maintenance Job Card\"],[\"contractor\",\"Maintenance Job Card\"],[\"scheduled_date\",\"Maintenance Job Card\"],[\"completed_on\",\"Maintenance Job Card\"],[\"material_cost\",\"Maintenance Job Card\"],[\"labour_cost\",\"Maintenance Job Card\"],[\"contractor_cost\",\"Maintenance Job Card\"],[\"total_cost\",\"Maintenance Job Card\"],[\"chargeable_to\",\"Maintenance Job Card\"]],\"sort_by\":\"total_cost\",\"sort_order\":\"desc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:50:23.516749",
+  "module": "Powersoft Property",
+  "name": "Job Card Cost Analysis",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Maintenance Job Card",
+  "reference_report": null,
+  "report_name": "Job Card Cost Analysis",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Facilities Manager"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[[\"PS Lease Agreement\",\"docstatus\",\"=\",1]],\"columns\":[[\"tenant\",\"PS Lease Agreement\"],[\"property_unit\",\"PS Lease Agreement\"],[\"end_date\",\"PS Lease Agreement\"],[\"lease_status\",\"PS Lease Agreement\"],[\"rent_amount\",\"PS Lease Agreement\"],[\"renewal_option\",\"PS Lease Agreement\"]],\"sort_by\":\"end_date\",\"sort_order\":\"asc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-08-04 02:01:08.283134",
+  "module": "Powersoft Property",
+  "name": "Lease Expiry Tracker",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "PS Lease Agreement",
+  "reference_report": null,
+  "report_name": "Lease Expiry Tracker",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Leasing Agent"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"columns\":[[\"property\",\"Property Unit\"],[\"unit_number\",\"Property Unit\"],[\"unit_type\",\"Property Unit\"],[\"unit_status\",\"Property Unit\"],[\"rent_amount\",\"Property Unit\"],[\"service_charge_amount\",\"Property Unit\"],[\"listing_status\",\"Property Unit\"]],\"sort_by\":\"property\",\"sort_order\":\"asc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:49:22.840590",
+  "module": "Powersoft Property",
+  "name": "Unit Occupancy & Vacancy",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Property Unit",
+  "reference_report": null,
+  "report_name": "Unit Occupancy & Vacancy",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Leasing Agent"
+   },
+   {
+    "role": "Facilities Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[[\"Property Unit\",\"unit_status\",\"=\",\"Vacant\"]],\"columns\":[[\"property\",\"Property Unit\"],[\"unit_number\",\"Property Unit\"],[\"unit_type\",\"Property Unit\"],[\"unit_status\",\"Property Unit\"],[\"rent_amount\",\"Property Unit\"],[\"service_charge_amount\",\"Property Unit\"],[\"listing_status\",\"Property Unit\"]],\"sort_by\":\"property\",\"sort_order\":\"asc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:49:24.596787",
+  "module": "Powersoft Property",
+  "name": "Vacant Units for Letting",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Property Unit",
+  "reference_report": null,
+  "report_name": "Vacant Units for Letting",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Leasing Agent"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"columns\":[[\"property_name\",\"PS Property\"],[\"property_type\",\"PS Property\"],[\"property_owner\",\"PS Property\"],[\"suburb\",\"PS Property\"],[\"region\",\"PS Property\"],[\"total_units\",\"PS Property\"],[\"status\",\"PS Property\"],[\"current_valuation\",\"PS Property\"]],\"sort_by\":\"property_name\",\"sort_order\":\"asc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:49:27.641436",
+  "module": "Powersoft Property",
+  "name": "Property Portfolio Summary",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "PS Property",
+  "reference_report": null,
+  "report_name": "Property Portfolio Summary",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   },
+   {
+    "role": "Leasing Agent"
+   },
+   {
+    "role": "Facilities Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"columns\":[[\"subject\",\"PS Maintenance Request\"],[\"property\",\"PS Maintenance Request\"],[\"property_unit\",\"PS Maintenance Request\"],[\"tenant\",\"PS Maintenance Request\"],[\"request_type\",\"PS Maintenance Request\"],[\"priority\",\"PS Maintenance Request\"],[\"status\",\"PS Maintenance Request\"],[\"requested_date\",\"PS Maintenance Request\"],[\"actual_cost\",\"PS Maintenance Request\"]],\"sort_by\":\"requested_date\",\"sort_order\":\"desc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:49:29.879016",
+  "module": "Powersoft Property",
+  "name": "Maintenance Request Log",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "PS Maintenance Request",
+  "reference_report": null,
+  "report_name": "Maintenance Request Log",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Facilities Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[[\"Preventive Maintenance Plan\",\"status\",\"=\",\"Active\"]],\"columns\":[[\"task_name\",\"Preventive Maintenance Plan\"],[\"property\",\"Preventive Maintenance Plan\"],[\"property_unit\",\"Preventive Maintenance Plan\"],[\"category\",\"Preventive Maintenance Plan\"],[\"frequency\",\"Preventive Maintenance Plan\"],[\"last_performed\",\"Preventive Maintenance Plan\"],[\"next_due_date\",\"Preventive Maintenance Plan\"],[\"assigned_to\",\"Preventive Maintenance Plan\"],[\"contractor\",\"Preventive Maintenance Plan\"],[\"estimated_cost\",\"Preventive Maintenance Plan\"],[\"status\",\"Preventive Maintenance Plan\"]],\"sort_by\":\"next_due_date\",\"sort_order\":\"asc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:50:25.985596",
+  "module": "Powersoft Property",
+  "name": "Preventive Maintenance Due",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Preventive Maintenance Plan",
+  "reference_report": null,
+  "report_name": "Preventive Maintenance Due",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Facilities Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"columns\":[[\"property_name\",\"PS Property\"],[\"company\",\"PS Property\"],[\"property_type\",\"PS Property\"],[\"intended_use\",\"PS Property\"],[\"development_stage\",\"PS Property\"],[\"asset\",\"PS Property\"],[\"capitalised_on\",\"PS Property\"],[\"capitalised_amount\",\"PS Property\"],[\"current_valuation\",\"PS Property\"],[\"purchase_cost\",\"PS Property\"],[\"insurance_expiry\",\"PS Property\"]],\"sort_by\":\"current_valuation\",\"sort_order\":\"desc\"}",
+  "letter_head": "Official Logo",
+  "modified": "2026-07-30 10:50:28.134660",
+  "module": "Powersoft Property",
+  "name": "Property Asset Register",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "PS Property",
+  "reference_report": null,
+  "report_name": "Property Asset Register",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "role": "System Manager"
+   },
+   {
+    "role": "Property Manager"
+   },
+   {
+    "role": "Property Accountant"
+   }
+  ],
+  "timeout": 0
+ }
+]
