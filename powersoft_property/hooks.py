@@ -48,7 +48,7 @@ doc_events = {
 add_to_apps_screen = [
     {
         "name": "powersoft_property",
-        "title": "Powersoft Property",
+        "title": "Property Management",
         "logo": "/assets/powersoft_property/images/powersoft-property-logo.svg",
         "route": "/app/powersoft-property",
     }
