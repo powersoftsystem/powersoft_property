@@ -491,39 +491,9 @@
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
-    "label": "Rent Roll",
-    "link_count": 0,
-    "link_to": "Rent Roll (list view)",
-    "link_type": "Report",
-    "onboard": 0,
-    "only_for": null,
-    "report_ref_doctype": "PS Lease Agreement",
-    "type": "Link"
-   },
-   {
-    "dependencies": "PS Lease Agreement",
-    "description": null,
-    "hidden": 0,
-    "icon": null,
-    "is_query_report": 0,
     "label": "Lease Expiry Tracker",
     "link_count": 0,
     "link_to": "Lease Expiry Tracker",
-    "link_type": "Report",
-    "onboard": 0,
-    "only_for": null,
-    "report_ref_doctype": "PS Lease Agreement",
-    "type": "Link"
-   },
-   {
-    "dependencies": "PS Lease Agreement",
-    "description": null,
-    "hidden": 0,
-    "icon": null,
-    "is_query_report": 0,
-    "label": "Tenant Arrears",
-    "link_count": 0,
-    "link_to": "Tenant Arrears (list view)",
     "link_type": "Report",
     "onboard": 0,
     "only_for": null,
@@ -546,7 +516,7 @@
     "type": "Link"
    }
   ],
-  "modified": "2026-08-12 02:30:52.598882",
+  "modified": "2026-08-12 20:11:46.741658",
   "module": null,
   "name": "Property Leasing",
   "number_cards": [
@@ -1557,21 +1527,6 @@
     "type": "Card Break"
    },
    {
-    "dependencies": "PS Lease Agreement",
-    "description": null,
-    "hidden": 0,
-    "icon": null,
-    "is_query_report": 0,
-    "label": "Tenant Arrears",
-    "link_count": 0,
-    "link_to": "Tenant Arrears (list view)",
-    "link_type": "Report",
-    "onboard": 0,
-    "only_for": null,
-    "report_ref_doctype": "PS Lease Agreement",
-    "type": "Link"
-   },
-   {
     "dependencies": "Owner Statement",
     "description": null,
     "hidden": 0,
@@ -1587,7 +1542,7 @@
     "type": "Link"
    }
   ],
-  "modified": "2026-08-12 02:59:27.407941",
+  "modified": "2026-08-12 20:11:47.020392",
   "module": null,
   "name": "Property Billing",
   "number_cards": [
@@ -1760,7 +1715,7 @@
     "label": "Rent Collected Monthly"
    }
   ],
-  "content": "[{\"id\": \"ppHeroBlk\", \"type\": \"custom_block\", \"data\": {\"custom_block_name\": \"Property Hero\", \"col\": 12}}, {\"id\": \"ppHdrA\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Powersoft Property Management</b></span>\", \"col\": 12}}, {\"id\": \"ppSpc1\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"ppHdrM\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Money</b></span>\", \"col\": 12}}, {\"id\": \"ppNcM1\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Rent Roll\", \"col\": 3}}, {\"id\": \"ppNcM2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Arrears\", \"col\": 3}}, {\"id\": \"ppNcM3\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Deposits Held\", \"col\": 3}}, {\"id\": \"ppSc8\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Unpaid Rent\", \"col\": 3}}, {\"id\": \"ppSc7\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Landlord Payouts\", \"col\": 3}}, {\"id\": \"ppChM1\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Rent Invoiced Monthly\", \"col\": 6}}, {\"id\": \"ppChM2\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Rent Collected Monthly\", \"col\": 6}}, {\"id\": \"ppHdrO\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Occupancy</b></span>\", \"col\": 12}}, {\"id\": \"ppNc1\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Total Units\", \"col\": 3}}, {\"id\": \"ppNc2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Occupied Units\", \"col\": 3}}, {\"id\": \"ppNc3\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Vacant Units\", \"col\": 3}}, {\"id\": \"ppNc4\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Active Leases\", \"col\": 3}}, {\"id\": \"ppSc2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Vacant Units\", \"col\": 3}}, {\"id\": \"ppSc1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Properties\", \"col\": 3}}, {\"id\": \"ppSc3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Tenants\", \"col\": 3}}, {\"id\": \"ppSc4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Leases\", \"col\": 3}}, {\"id\": \"ppCh1\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Units by Status\", \"col\": 6}}, {\"id\": \"ppCh4\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Units by Property (all)\", \"col\": 6}}, {\"id\": \"ppHdrW\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Work in hand</b></span>\", \"col\": 12}}, {\"id\": \"ppSc6\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Maintenance\", \"col\": 3}}, {\"id\": \"ppNav3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Facilities & Maintenance\", \"col\": 3}}, {\"id\": \"ppNav1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Leasing & Tenancy\", \"col\": 3}}, {\"id\": \"ppNav4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Billing & Landlord Payouts\", \"col\": 3}}, {\"id\": \"ppCh5\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Leases by Status\", \"col\": 12}}, {\"id\": \"ppHdrP\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Pipeline & Setup</b></span>\", \"col\": 12}}, {\"id\": \"ppSc5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Listings\", \"col\": 3}}, {\"id\": \"ppNav2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Sales & Marketing\", \"col\": 3}}, {\"id\": \"ppNav5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Property Setup\", \"col\": 3}}, {\"id\": \"ppHdrUK\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>United Kingdom</b></span>\", \"col\": 12}}, {\"id\": \"ppNc5\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Units (secondary)\", \"col\": 3}}, {\"id\": \"ppNc6\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Vacant Units (secondary)\", \"col\": 3}}, {\"id\": \"ppHdrD\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Explore</b></span>\", \"col\": 12}}, {\"id\": \"ppCd1\", \"type\": \"card\", \"data\": {\"card_name\": \"Portfolio\", \"col\": 4}}, {\"id\": \"ppCd2\", \"type\": \"card\", \"data\": {\"card_name\": \"Leasing\", \"col\": 4}}, {\"id\": \"ppCd3\", \"type\": \"card\", \"data\": {\"card_name\": \"Sales & Marketing\", \"col\": 4}}, {\"id\": \"ppCd4\", \"type\": \"card\", \"data\": {\"card_name\": \"Facilities\", \"col\": 4}}, {\"id\": \"ppCd5\", \"type\": \"card\", \"data\": {\"card_name\": \"Billing & Owners\", \"col\": 4}}, {\"id\": \"ppCd6\", \"type\": \"card\", \"data\": {\"card_name\": \"Construction & Facilities\", \"col\": 4}}, {\"id\": \"ppCd7\", \"type\": \"card\", \"data\": {\"card_name\": \"Leasing Reports\", \"col\": 4}}, {\"id\": \"ppCd8\", \"type\": \"card\", \"data\": {\"card_name\": \"Portfolio & Sales Reports\", \"col\": 4}}, {\"id\": \"ppCd9\", \"type\": \"card\", \"data\": {\"card_name\": \"Billing Reports\", \"col\": 4}}]",
+  "content": "[{\"id\": \"ppHeroBlk\", \"type\": \"custom_block\", \"data\": {\"custom_block_name\": \"Property Hero\", \"col\": 12}}, {\"id\": \"ppHdrA\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Powersoft Property Management</b></span>\", \"col\": 12}}, {\"id\": \"ppSpc1\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"ppHdrM\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Money</b></span>\", \"col\": 12}}, {\"id\": \"ppNcM1\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Rent Roll\", \"col\": 3}}, {\"id\": \"ppNcM2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Arrears\", \"col\": 3}}, {\"id\": \"ppNcM3\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Deposits Held\", \"col\": 3}}, {\"id\": \"ppSc8\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Unpaid Rent\", \"col\": 3}}, {\"id\": \"ppSc7\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Landlord Payouts\", \"col\": 3}}, {\"id\": \"ppChM1\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Rent Invoiced Monthly\", \"col\": 6}}, {\"id\": \"ppChM2\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Rent Collected Monthly\", \"col\": 6}}, {\"id\": \"ppHdrO\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Occupancy</b></span>\", \"col\": 12}}, {\"id\": \"ppNc1\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Total Units\", \"col\": 3}}, {\"id\": \"ppNc2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Occupied Units\", \"col\": 3}}, {\"id\": \"ppNc3\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Vacant Units\", \"col\": 3}}, {\"id\": \"ppNc4\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Active Leases\", \"col\": 3}}, {\"id\": \"ppSc2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Vacant Units\", \"col\": 3}}, {\"id\": \"ppSc1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Properties\", \"col\": 3}}, {\"id\": \"ppSc3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Tenants\", \"col\": 3}}, {\"id\": \"ppSc4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Leases\", \"col\": 3}}, {\"id\": \"ppCh1\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Units by Status\", \"col\": 6}}, {\"id\": \"ppCh4\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Units by Property (all)\", \"col\": 6}}, {\"id\": \"ppHdrW\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Work in hand</b></span>\", \"col\": 12}}, {\"id\": \"ppSc6\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Maintenance\", \"col\": 3}}, {\"id\": \"ppNav3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Facilities & Maintenance\", \"col\": 3}}, {\"id\": \"ppNav1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Leasing & Tenancy\", \"col\": 3}}, {\"id\": \"ppNav4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Billing & Landlord Payouts\", \"col\": 3}}, {\"id\": \"ppCh5\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Leases by Status\", \"col\": 12}}, {\"id\": \"ppHdrP\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Pipeline & Setup</b></span>\", \"col\": 12}}, {\"id\": \"ppSc5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Listings\", \"col\": 3}}, {\"id\": \"ppNav2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Sales & Marketing\", \"col\": 3}}, {\"id\": \"ppNav5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Property Setup\", \"col\": 3}}, {\"id\": \"ppHdrD\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Explore</b></span>\", \"col\": 12}}, {\"id\": \"ppCd1\", \"type\": \"card\", \"data\": {\"card_name\": \"Portfolio\", \"col\": 4}}, {\"id\": \"ppCd2\", \"type\": \"card\", \"data\": {\"card_name\": \"Leasing\", \"col\": 4}}, {\"id\": \"ppCd3\", \"type\": \"card\", \"data\": {\"card_name\": \"Sales & Marketing\", \"col\": 4}}, {\"id\": \"ppCd4\", \"type\": \"card\", \"data\": {\"card_name\": \"Facilities\", \"col\": 4}}, {\"id\": \"ppCd5\", \"type\": \"card\", \"data\": {\"card_name\": \"Billing & Owners\", \"col\": 4}}, {\"id\": \"ppCd6\", \"type\": \"card\", \"data\": {\"card_name\": \"Construction & Facilities\", \"col\": 4}}, {\"id\": \"ppCd7\", \"type\": \"card\", \"data\": {\"card_name\": \"Leasing Reports\", \"col\": 4}}, {\"id\": \"ppCd8\", \"type\": \"card\", \"data\": {\"card_name\": \"Portfolio & Sales Reports\", \"col\": 4}}, {\"id\": \"ppCd9\", \"type\": \"card\", \"data\": {\"card_name\": \"Billing Reports\", \"col\": 4}}]",
   "custom_blocks": [
    {
     "custom_block_name": "Property Hero",
@@ -2205,36 +2160,6 @@
     "hidden": 0,
     "icon": null,
     "is_query_report": 0,
-    "label": "Rent Roll",
-    "link_count": 0,
-    "link_to": "Rent Roll (list view)",
-    "link_type": "Report",
-    "onboard": 0,
-    "only_for": null,
-    "report_ref_doctype": "PS Lease Agreement",
-    "type": "Link"
-   },
-   {
-    "dependencies": "PS Lease Agreement",
-    "description": null,
-    "hidden": 0,
-    "icon": null,
-    "is_query_report": 0,
-    "label": "Tenant Arrears",
-    "link_count": 0,
-    "link_to": "Tenant Arrears (list view)",
-    "link_type": "Report",
-    "onboard": 0,
-    "only_for": null,
-    "report_ref_doctype": "PS Lease Agreement",
-    "type": "Link"
-   },
-   {
-    "dependencies": "PS Lease Agreement",
-    "description": null,
-    "hidden": 0,
-    "icon": null,
-    "is_query_report": 0,
     "label": "Lease Expiry Tracker",
     "link_count": 0,
     "link_to": "Lease Expiry Tracker",
@@ -2410,7 +2335,7 @@
     "type": "Link"
    }
   ],
-  "modified": "2026-08-12 02:30:04.945990",
+  "modified": "2026-08-12 20:11:40.302780",
   "module": "",
   "name": "Powersoft Property",
   "number_cards": [
@@ -2441,14 +2366,6 @@
    {
     "label": "Active Leases",
     "number_card_name": "Active Leases"
-   },
-   {
-    "label": "Units (secondary)",
-    "number_card_name": "Units (secondary)"
-   },
-   {
-    "label": "Vacant Units (secondary)",
-    "number_card_name": "Vacant Units (secondary)"
    }
   ],
   "parent_page": "",

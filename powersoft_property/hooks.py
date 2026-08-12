@@ -11,6 +11,28 @@ required_apps = ["erpnext"]
 after_install = "powersoft_property.install.after_install"
 
 # ---------------------------------------------------------------------------
+# DESK HOME SCREEN
+#
+# Without this the module is reachable only by searching for its workspace,
+# which is how a customer concludes the app "is not really there". This puts
+# Powersoft Property on the apps screen as its own tile, alongside Accounting
+# and Selling, pointing straight at the landing workspace.
+#
+# The logo lives in powersoft_property/public/images/ and is only served after
+# `bench build`. A broken image on the tile means that step was skipped.
+# ---------------------------------------------------------------------------
+
+add_to_apps_screen = [
+    {
+        "name": "powersoft_property",
+        "title": "Powersoft Property",
+        "logo": "/assets/powersoft_property/images/powersoft-property-logo.svg",
+        "route": "/app/powersoft-property",
+    }
+]
+
+
+# ---------------------------------------------------------------------------
 # FIXTURES
 #
 # Export:  bench --site <demo-site> export-fixtures --app powersoft_property
@@ -116,7 +138,14 @@ fixtures = [
         ],
     },
 
-    {"dt": "Number Card", "filters": [["module", "=", "Powersoft Property"]]},
+    # "Units (secondary)" and "Vacant Units (secondary)" count the demo's SECOND
+    # company, which exists only so the demo can show two currencies side by
+    # side. On a customer site they read zero under a heading that means
+    # nothing. They stay on the demo; they just do not ship.
+    {"dt": "Number Card", "filters": [
+        ["module", "=", "Powersoft Property"],
+        ["name", "not in", ["Units (secondary)", "Vacant Units (secondary)"]],
+    ]},
     {"dt": "Dashboard Chart", "filters": [["module", "=", "Powersoft Property"]]},
     {"dt": "Dashboard", "filters": [["module", "=", "Powersoft Property"]]},
     {"dt": "Custom HTML Block", "filters": [["name", "in", ["Property Hero"]]]},
