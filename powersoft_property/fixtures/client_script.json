@@ -4,6 +4,28 @@
   "doctype": "Client Script",
   "dt": "PS Lease Agreement",
   "enabled": 1,
+  "modified": "2026-07-29 14:55:35.764347",
+  "module": null,
+  "name": "PS Lease Agreement - Currency Cascade",
+  "script": "// Currency cascade: tenant -> property -> company.\n// Only fills `currency` when it is blank, so a manual override is never lost.\nfrappe.ui.form.on('PS Lease Agreement', {\n\trefresh: function (frm) { ps_currency_cascade(frm); },\n\ttenant: function (frm) { ps_currency_cascade(frm); },\n\tproperty: function (frm) { ps_currency_cascade(frm); },\n\tcompany: function (frm) { ps_currency_cascade(frm); }\n});\n\nfunction ps_currency_cascade(frm) {\n\tif (!frm || !frm.doc || frm.doc.currency) return;\n\n\t// Resolve one source; returns a Promise of a currency code or null.\n\tfunction look(doctype, name, field) {\n\t\tif (!name) return Promise.resolve(null);\n\t\ttry {\n\t\t\treturn frappe.db.get_value(doctype, name, field)\n\t\t\t\t.then(function (r) {\n\t\t\t\t\treturn (r && r.message && r.message[field]) || null;\n\t\t\t\t})\n\t\t\t\t.catch(function () { return null; });\n\t\t} catch (e) {\n\t\t\treturn Promise.resolve(null);\n\t\t}\n\t}\n\n\tlook('Tenant', frm.doc.tenant, 'default_currency')\n\t\t.then(function (cur) {\n\t\t\treturn cur || look('PS Property', frm.doc.property, 'currency');\n\t\t})\n\t\t.then(function (cur) {\n\t\t\treturn cur || look('Company', frm.doc.company, 'default_currency');\n\t\t})\n\t\t.then(function (cur) {\n\t\t\t// Re-check emptiness: the user may have typed while we were waiting.\n\t\t\tif (cur && !frm.doc.currency) {\n\t\t\t\tfrm.set_value('currency', cur);\n\t\t\t}\n\t\t})\n\t\t.catch(function () { /* never block the form */ });\n}\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Property Sale Contract",
+  "enabled": 1,
+  "modified": "2026-07-29 14:55:41.277487",
+  "module": null,
+  "name": "Property Sale Contract - Currency Cascade",
+  "script": "// Currency cascade: customer -> property -> company.\n// Only fills `currency` when it is blank, so a manual override is never lost.\nfrappe.ui.form.on('Property Sale Contract', {\n\trefresh: function (frm) { ps_sale_currency_cascade(frm); },\n\tcustomer: function (frm) { ps_sale_currency_cascade(frm); },\n\tproperty: function (frm) { ps_sale_currency_cascade(frm); },\n\tcompany: function (frm) { ps_sale_currency_cascade(frm); }\n});\n\nfunction ps_sale_currency_cascade(frm) {\n\tif (!frm || !frm.doc || frm.doc.currency) return;\n\n\tfunction look(doctype, name, field) {\n\t\tif (!name) return Promise.resolve(null);\n\t\ttry {\n\t\t\treturn frappe.db.get_value(doctype, name, field)\n\t\t\t\t.then(function (r) {\n\t\t\t\t\treturn (r && r.message && r.message[field]) || null;\n\t\t\t\t})\n\t\t\t\t.catch(function () { return null; });\n\t\t} catch (e) {\n\t\t\treturn Promise.resolve(null);\n\t\t}\n\t}\n\n\tlook('Customer', frm.doc.customer, 'default_currency')\n\t\t.then(function (cur) {\n\t\t\treturn cur || look('PS Property', frm.doc.property, 'currency');\n\t\t})\n\t\t.then(function (cur) {\n\t\t\treturn cur || look('Company', frm.doc.company, 'default_currency');\n\t\t})\n\t\t.then(function (cur) {\n\t\t\tif (cur && !frm.doc.currency) {\n\t\t\t\tfrm.set_value('currency', cur);\n\t\t\t}\n\t\t})\n\t\t.catch(function () { /* never block the form */ });\n}\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "PS Lease Agreement",
+  "enabled": 1,
   "modified": "2026-07-30 22:51:21.851350",
   "module": "Powersoft Property",
   "name": "PS Lease Agreement - Create Rent Invoice",

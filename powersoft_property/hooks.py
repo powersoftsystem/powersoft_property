@@ -73,7 +73,37 @@ fixtures = [
 
     {"dt": "DocType", "filters": [["module", "=", "Powersoft Property"]]},
 
-    {"dt": "Custom Field", "filters": [["module", "=", "Powersoft Property"]]},
+    {
+        # DO NOT filter these by module. Custom Fields added through the desk UI
+        # keep module = NULL, so ["module","=","Powersoft Property"] matched 2 of
+        # 130 and the app shipped almost none of its own fields. Sales Invoice got
+        # ZERO - no ps_lease_agreement, no ps_schedule_row - so Create Rent Invoice
+        # could not link an invoice to its lease and the rent schedule never
+        # updated. The install looked perfectly healthy. Same trap as the
+        # Workspace export.
+        #
+        # Filter by fieldname instead. Only four belong to this app, and they are
+        # specific enough not to collide.
+        #
+        # The dt exclusions matter just as much: `property` also sits on Loan and
+        # on HR doctypes belonging to other apps on the build bench. Shipping a
+        # Custom Field whose target DocType does not exist on the customer's site
+        # fails the import outright.
+        "dt": "Custom Field",
+        "filters": [
+            ["fieldname", "in", [
+                "property", "property_unit",
+                "ps_lease_agreement", "ps_schedule_row",
+            ]],
+            ["dt", "not in", [
+                "Loan", "Loan Demand", "Loan Disbursement",
+                "Loan Interest Accrual", "Loan Refund", "Loan Repayment",
+                "Leave Encashment", "Payroll Entry",
+                "Expense Claim", "Expense Claim Detail",
+                "Expense Taxes and Charges",
+            ]],
+        ],
+    },
 
     # Property Setters.
     #
@@ -136,7 +166,21 @@ fixtures = [
         ]]],
     },
 
-    {"dt": "Client Script", "filters": [["module", "=", "Powersoft Property"]]},
+    {
+        # By name, not by module. Only "Create Rent Invoice" happened to have a
+        # module set; the two Currency Cascade scripts were created through the
+        # desk UI and left it blank, so they never shipped.
+        #
+        # The "Company Filter" and "Company Currency Price List" scripts are
+        # deliberately NOT here. They are demo-bench conveniences for showing two
+        # companies side by side, and mean nothing on a customer site.
+        "dt": "Client Script",
+        "filters": [["name", "in", [
+            "PS Lease Agreement - Create Rent Invoice",
+            "PS Lease Agreement - Currency Cascade",
+            "Property Sale Contract - Currency Cascade",
+        ]]],
+    },
 
     # The rent schedule write-back. "PS One Off Data Repair" is excluded on
     # purpose - a scratch script that must never reach a customer site.
